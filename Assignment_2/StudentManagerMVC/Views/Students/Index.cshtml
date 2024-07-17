@@ -1,0 +1,75 @@
+﻿@model IEnumerable<StudentManagerMVC.Models.Student>
+
+@{
+    ViewData["Title"] = "Students Index";
+}
+
+<h1>Students Index</h1>
+
+<form method="get" asp-controller="Students" asp-action="Index">
+    <div class="form-group">
+        <label for="filter">Select Filter:</label>
+        <select id="filter" name="filter" class="form-control">
+            <option value="">None</option>
+            <option value="Male">Male Students</option>
+            <option value="Oldest">Oldest Student</option>
+            <option value="FullName">Full Name</option>
+            <option value="BirthYear">Birth Year</option>
+            <option value="Hanoi">Born in Hanoi</option>
+        </select>
+    </div>
+    <div class="form-group" id="year-group" style="display:none;">
+        <label for="year">Enter Year:</label>
+        <input type="number" id="year" name="year" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Filter</button>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.First().ID)</th>
+            <th>@Html.DisplayNameFor(model => model.First().LastName)</th>
+            <th>@Html.DisplayNameFor(model => model.First().FirstName)</th>
+            <th>@Html.DisplayNameFor(model => model.First().DateOfBirth)</th>
+            <th>@Html.DisplayNameFor(model => model.First().Gender)</th>
+            <th>@Html.DisplayNameFor(model => model.First().PlaceOfBirth)</th>
+            <th>@Html.DisplayNameFor(model => model.First().Mobile)</th>
+            <th>@Html.DisplayNameFor(model => model.First().IsGraduated)</th>
+            <th>@Html.DisplayNameFor(model => model.First().FullName)</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.ID)</td>
+                <td>@Html.DisplayFor(modelItem => item.LastName)</td>
+                <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
+                <td>@Html.DisplayFor(modelItem => item.DateOfBirth)</td>
+                <td>@Html.DisplayFor(modelItem => item.Gender)</td>
+                <td>@Html.DisplayFor(modelItem => item.PlaceOfBirth)</td>
+                <td>@Html.DisplayFor(modelItem => item.Mobile)</td>
+                <td>@Html.DisplayFor(modelItem => item.IsGraduated)</td>
+                <td>@Html.DisplayFor(modelItem => item.FullName)</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    document.getElementById('filter').addEventListener('change', function () {
+        var yearGroup = document.getElementById('year-group');
+        if (this.value === 'BirthYear') {
+            yearGroup.style.display = 'block';
+        } else {
+            yearGroup.style.display = 'none';
+        }
+    });
+</script>
